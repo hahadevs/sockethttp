@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatApp</title>
+</head>
+<body>
+    Homepage
+</body>
+<script type="module">
+    import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
+  
+    const socket = new io("ws://"+window.location.host+"/");
+  </script>
+</html>
