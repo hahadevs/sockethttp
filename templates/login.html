@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
     <title>Login | Real Time Chat App</title>
 </head>
 <style>
+  .poppins{
+    font-family: 'Poppins', sans-serif;
+  }
     :root {
   --font-base: "Lato";
   --fs-700: 2.986rem;
@@ -38,8 +45,6 @@
 
   --text: var(--grey-500);
   --text-alt: var(--grey-900);
-  --background: var(--grey-200);
-  --background-alt: var(--grey-100);
   --background-shade:#ffffff;
     }
 
@@ -78,7 +83,6 @@
     font-family: var(--font-base), sans-serif;
     font-weight: 400;
     line-height: 1.618;
-    color: var(--grey-700);
     }
 
     h1,
@@ -142,6 +146,7 @@
     margin-top: unset;
     margin-bottom: 2rem;
     text-align: center;
+    color: #576375;
     }
 
     /* Input defaults and validation */
@@ -173,8 +178,10 @@
     width: 100%;
     padding: clamp(1rem, 5vw, 2rem);
     margin: auto;
-    background-color: var(--background-alt);
+    background-color:rgb(238, 227, 213);
     border-radius: 0.25rem;
+    box-shadow: 8px 8px 20px 4px lightgray;
+    border-radius: 20px;
     }
 
     .form-wrapper .title {
@@ -200,17 +207,20 @@
     }
 
     .form-submit {
-    padding: 1rem;
+    padding: 0.6rem;
     border: none;
     border-radius: 0.25rem;
     cursor: pointer;
-    background-color: rgb(13, 187, 13);
+    background-color: limegreen;
     color: var(--white);
     transition: background-color cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.3s;
+    box-shadow: 4px 4px 8px 4px lightgray;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.7rem;
     }
 
     .form-submit:hover {
-    background-color: rgb(12, 145, 12);
+      box-shadow: 6px 6px 10px 4px rgb(190, 190, 190);
     }
 
     .form-footer {
@@ -262,13 +272,37 @@
     white-space: nowrap;
     visibility: hidden;
     }
+    a{
+      text-decoration: underline;
+    }
+    input{
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    input:focus{
+      outline: none;
+      box-shadow: 2px 2px 4px 1px lightgray;
+    }
+    .error-div{
+      border:1px solid salmon;
+      color: salmon;
+      background-color: rgba(255, 156, 156, 0.103);
+      padding:0.4rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
 </style>
 <body>
     <main>
         <section class="form-section">
           <div class="form-wrapper">
-            <h1 class="title">Login</h1>
+            {% if error %}
+            <div class="error-div">
+              Username or Password Not Valid
+            </div>
+            {% endif %}
+            <h1 class="title poppins" style="color: #64748b;">Login</h1>
             <form class="form" action="" method="post" enctype="multipart/form-data" >
               <div class="form-group">
                 <label>
@@ -285,20 +319,12 @@
               <div class="form-group">
                 <input type="submit" value="Submit" class="form-submit">
               </div>
-    
-              <!-- <footer class="form-footer">
-                  <div>
-                    <a href="#" class="form-link">Forgot password?</a>
-                  </div>
-                  <div>
-                    Already have an account?
-                    <a href="#" class="form-link">Log in</a>
-                  </div>
-              </footer> -->
             </form>
-            <a href="/signup/">Signup ?</a>
+            <a href="/signup/" style="color: #64748b;">Signup ?</a>
           </div>
         </section>
       </main>
 </body>
+<script>
+</script>
 </html>

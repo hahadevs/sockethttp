@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
+    <!-- font awesome cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <title>ChatApp</title>
+</head>
+<style>
+    :root {
+        --bg-natural: rgb(238, 227, 213);
+        --main-border: lightgray;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+
+    main {
+        flex-grow: 1;
+        display: flex;
+        margin: 8vh 8vw;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: -1;
+            background-color: limegreen;
+            border-radius: 40%;
+            width: 500px;
+            height: 550px;
+            transform: translateX(40%) translateY(-50%) rotate(90deg);
+        }
+    }
+
+    .section1 {
+        position: relative;
+        flex-grow: 1;
+        border-radius: 5px 0 0 5px;
+        border-top: 2px solid var(--main-border);
+        border-left: 2px solid var(--main-border);
+        border-bottom: 2px solid var(--main-border);
+        border-right: 2px solid lightgray;
+
+        &>div {
+            width: 100%;
+            text-align: center;
+            border-bottom: 4px solid gray;
+            box-shadow: 0 0 4px gray;
+            background-color: limegreen;
+            padding: 1rem 0;
+            color: white;
+
+            &>i {
+                margin-right: 4px;
+            }
+        }
+    }
+
+    .logout {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 10px;
+        margin-left: 10px;
+        color: white;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+    .create-group{
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 10px;
+        margin-right: 10px;
+        color: white;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style-type: none;
+        overflow-y: scroll;
+
+        &>li {
+            border: 1px solid transparent;
+            border-bottom: 1px solid lightgray;
+            padding: 0.4rem 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+            font-family: 'Kanit';
+            color: darkslategray;
+            text-transform: capitalize;
+            padding-left: 1rem;
+
+            &:hover {
+                box-shadow: 0 0 5px 1px inset lightgray;
+                background-color: rgba(144, 238, 144, 0.3);
+                border: 1px solid lightgray;
+                cursor: pointer;
+            }
+
+            &>span>i {
+                font-size: 0.6rem;
+            }
+        }
+    }
+
+    .section2 {
+        flex-grow: 4;
+        background-color: var(--bg-natural);
+        border-top: 2px solid var(--main-border);
+        border-right: 2px solid var(--main-border);
+        border-bottom: 2px solid var(--main-border);
+        display: flex;
+        flex-direction: column;
+        border-radius: 0 20px 20px 0;
+    }
+
+    .top {
+        text-align: center;
+        padding: 1rem;
+        border-bottom: 4px solid gray;
+        text-transform: capitalize;
+        font-family: 'Kanit';
+        color: darkslategrey;
+        background-color: white;
+    }
+
+    .mid {
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+        &>ol {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            overflow-y: scroll;
+            padding: 10px;
+            color: rgb(35, 58, 58);
+            list-style: none;
+            border: 2px solid rgba(211, 211, 211, 0.438);
+
+            &>li {
+                width: 100%;
+                display: flex;
+                margin-bottom: 5px;
+                &>div {
+                    display: flex;
+                    flex-direction: column;
+                    border: 2px solid lightgray;
+                    width: fit-content;
+                    margin-left: 1rem;
+                    border-radius: 5px;
+
+                    &>span {
+                        margin: 4px 4px 2px 6px;
+                    }
+
+                    &>div {
+                        display: flex;
+                        justify-content: space-between;
+
+                        &>span {
+                            font-size: 10px;
+                            margin: 5px;
+                        }
+
+                        &>i {
+                            font-size: 10px;
+                            margin: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .input-div {
+        display: flex;
+        padding: 10px 8px;
+        display: flex;
+        margin: 10px;
+        border-radius: 5px;
+
+        &>input {
+            flex-grow: 1;
+            border: 2px solid lightgray;
+            box-shadow: 4px 4px 4px 1px lightgray;
+            padding-left: 1rem;
+            border-radius: 10px;
+            color: darkslategray;
+            outline: none;
+            font-size: 1rem;
+            width: 90%;
+            margin-right: 0.5rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &>button {
+            width: auto;
+            padding: 1rem;
+            background-color: limegreen;
+            box-shadow: 4px 4px 4px 1px lightgray;
+            border-radius: 50%;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    .me {
+        justify-content: flex-end;
+    }
+
+    .they {
+        justify-content: flex-start;
+    }
+    .me-color{
+        background-color: rgba(252, 181, 173, 0.801);
+    }
+    .they-color{
+        background-color: whitesmoke;
+    }
+    .online {
+        color: limegreen;
+    }
+
+    .offline {
+        color: rgb(255, 60, 60);
+    }
+</style>
+
+<body>
+    <main>
+        <section class="section1">
+            <div> <i class="fa-brands  fa-whatsapp" aria-hidden="true"></i>{{ email }}</div>
+            <i class="fa fa-sign-out logout" onclick="logout();">
+            </i>
+            <i class="fa fa-plus create-group" onclick="window.location.href='/create-group/';"></i>
+            <ul id="users-meta-wrapper">
+            </ul>
+        </section>
+        <section class="section2">
+            <div class="top"></div>
+            <div class="mid">
+                <ol id="messages-ol">
+                    <li>
+                    </li>
+                </ol>
+            </div>
+            <div class="bottom">
+                <div class="input-div">
+                    <input type="text" id="ready-message">
+                    <button type="button" id="send-button"><i class="fa fa-plane"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+<script>
+    var users_meta_wrapper = document.getElementById("users-meta-wrapper");
+    var top_div = document.getElementsByClassName("top")[0];
+    var chat_ul = document.getElementsByClassName("mid")[0];
+    var socket_outside = null;
+    var active_chat_user_id = false;
+    function setUserChat(email, firstname) {
+        document.getElementById("messages-ol").innerHTML = "";
+        active_chat_user_id = email;
+        top_div.innerHTML = firstname + " ";
+        user_chat = JSON.parse(localStorage.getItem("user_chat"));
+        user_chat.forEach(message_data => {
+            if ((message_data[1] == "{{ email }}" || message_data[1] == active_chat_user_id) && (message_data[2] == "{{ email }}" || message_data[2] == active_chat_user_id)) { }
+            else { return }
+            let time = message_data[3].slice(11, 16, +1);
+            setMessage({
+                "sender": message_data[1],
+                "receiver": message_data[2],
+                "time": time,
+                "message": message_data[4],
+                "msid": message_data[5],
+                "status": message_data[6]
+            });
+        });
+    };
+    function setMessage(msg_dict) {
+        if (msg_dict['sender'] == "{{ email }}") {
+            var who = "me";
+            var color_class = "me-color";
+        }
+        else {
+            var who = "they";
+            var color_class = "they-color";
+        }
+        var status_class = "";
+        var status_color = "";
+        if (who == "me") {
+            var status_class = "fa-check";
+            var status_color = "grey";
+            if (msg_dict['status'] == "delivered") {
+                var status_class = "fa-check-double";
+            }
+            if (msg_dict['status'] == "seen") {
+                var status_class = "fa-check-double";
+                var status_color = "#6495ED";
+            }
+        } else {
+            if (msg_dict["status"] != "seen") {
+                socket_outside.send({
+                    "type":"message-seen",
+                    "sender":msg_dict['sender'],
+                    "msid":msg_dict['msid'],
+                });
+                var user_chat = JSON.parse(localStorage.getItem("user_chat"));
+                user_chat.forEach(user=>{
+                    if(user[5] = msg_dict['msid'] ){
+                        user[6] = "seen";
+                    };
+                });
+                localStorage.setItem("user_chat",JSON.stringify(user_chat));
+            };
+        };
+        let message_tag = `
+                <li class="${who}">
+                    <div class="${color_class}">
+                        <span>${msg_dict['message']}</span>
+                        <div>
+                            <span>${msg_dict['time']}</span>
+                            <i id="${msg_dict['msid']}" class="fa ${status_class}" style="color:${status_color};"></i>
+                        </div>
+                    </div>
+                </li>`;
+        document.getElementById("messages-ol").insertAdjacentHTML("beforeend", message_tag);
+    };
+
+</script>
+<script type="module">
+    import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
+    new Promise(r => setTimeout(r, 1000));
+    // var socket = new io("wss://" + window.location.host + "/").connect();
+    var socket = new io("ws://" + window.location.host + "/").connect();
+    socket_outside = socket;
+    // send message function 
+    document.getElementById("send-button").addEventListener("click", function () {
+        let ready_message = document.getElementById("ready-message").value;
+        if (ready_message && active_chat_user_id) {
+            let dateobj = new Date();
+            let time = dateobj.getHours() + " " + dateobj.getMinutes()
+            document.getElementById("ready-message").value = "";
+            let msid = uuidv4();
+            let message_array = new Array(0, "{{ email }}", active_chat_user_id, time, ready_message, msid, "wait");
+            user_chat = JSON.parse(localStorage.getItem("user_chat"));
+            user_chat.push(message_array)
+            localStorage.setItem("user_chat", JSON.stringify(user_chat));
+            setMessage({
+                "sender": "{{ email }}",
+                "receiver": active_chat_user_id,
+                "message": ready_message,
+                "time": time,
+                "msid": msid,
+                "status": "wait"
+            });
+            socket.send({
+                "sender": "{{ email }}",
+                "receiver": active_chat_user_id,
+                "message": ready_message,
+                "msid": msid
+            });
+        }
+    });
+    socket.on("connect", function () {
+        // socket_status_div.classList.remove("processig");
+        // socket_status_div.classList.add("success");
+        // new Promise(r => setTimeout(r,3000));
+    });
+    socket.on("users_data_sockets_meta", (data_dict) => {
+        localStorage.setItem("user_chat", JSON.stringify(data_dict["user_chat"]));
+        localStorage.setItem("users_data", JSON.stringify(data_dict["users_data"]));
+        var users_data = data_dict["users_data"];
+        let sockets_meta = data_dict["sockets_meta"];
+        users_data.forEach(user => {
+            if (user[0] == "{{ email }}") { return }
+            let status = "offline"
+            sockets_meta.forEach(socket => {
+                if (socket[0] == user[0]) {
+                    status = "online"
+                };
+            });
+            let meta_html = `<li id="${user[0]}" onclick="setUserChat('${user[0]}','${user[1]}','${user[2]}');" > 
+            <span>${user[1]}</span>
+            <span><i class="fa fa-circle ${status}" id="${user[0]}-status"></i></span>
+            </li>
+            `;
+            users_meta_wrapper.insertAdjacentHTML("beforeend", meta_html);
+        });
+        users_meta_wrapper.firstElementChild.click();
+    });
+    socket.on("disconnected-user", (email) => {
+        let user_status_div = document.getElementById(email + "-status");
+        if (user_status_div != null) {
+            user_status_div.classList.remove("online");
+            user_status_div.classList.add("offline");
+        }
+    });
+    socket.on("connected-user", (email) => {
+        let user_status_div = document.getElementById(email + "-status");
+        if (user_status_div != null) {
+            user_status_div.classList.remove("offline");
+            user_status_div.classList.add("online");
+            if (active_chat_user_id == email) {
+                let visible_messages = document.getElementsByClassName("fa-check");
+                Array.prototype.forEach.call(visible_messages, function (element) {
+                    if (element.classList.contains("fa-check")) {
+                        element.classList.remove("fa-check");
+                        element.classList.add("fa-check-double");
+                    };
+                });
+            };
+            let user_chat = JSON.parse(localStorage.getItem("user_chat"));
+            user_chat.forEach(user => {
+                if (user[2] == email) {
+                    user[6] = "delivered";
+                }
+            });
+        }
+        else {
+            if (email != "{{ email }}") {
+                let meta_html = `<li id="${email}" onclick="setUserChat('${email}','${email}','');" > 
+                <span>${email}</span>
+                <span><i class="fa fa-circle online" id="${email}-status"></i></span>
+                </li>
+                `;
+                users_meta_wrapper.insertAdjacentHTML("beforeend", meta_html);
+            }
+        }
+    });
+    socket.on("disconnect", function () {
+        users_meta_wrapper.innerHTML = "";
+    });
+    socket.on("status", (status) => {
+        if (status == "unauthorize access!") {
+            alert(status);
+        }
+        console.log(status)
+    });
+    socket.on("new-message", (data) => {
+        if (active_chat_user_id == data['sender']) {
+            let date_obj = new Date();
+            let time = date_obj.getHours() + " " + date_obj.getMinutes();
+            let message_tag = `
+        <li class="they">
+            <div class="they-color">
+                <span>${data['message']}</span>
+                <div>
+                    <span>${time}</span>
+                    <i id="${data["msid"]}"></i>
+                </div>
+            </div>
+        </li>`;
+            document.getElementById("messages-ol").insertAdjacentHTML("beforeend", message_tag)
+            socket.send({"type":"message-seen","sender":data["sender"],"msid":data["msid"]})
+        };
+        let date_obj = new Date();
+        let time = date_obj.getHours() + " " + date_obj.getMinutes();
+        let message_array = new Array(1, data['sender'], data['receiver'], time ,data['message'],data["msid"],data['status']);
+        user_chat = JSON.parse(localStorage.getItem("user_chat"));
+        user_chat.push(message_array)
+        localStorage.setItem("user_chat", JSON.stringify(user_chat));
+    });
+    socket.on("message-received", (data) => {
+        if(document.getElementById(data['msid'])!=null){
+            document.getElementById(data['msid']).classList.remove("fa-clock");
+            document.getElementById(data['msid']).classList.add("fa-check");
+        };
+        user_chat = JSON.parse(localStorage.getItem("user_chat"));
+        user_chat.forEach(user=>{
+            if(user[5]==data['msid']){
+                user[6] = "not-delivered";
+            };
+        });
+        localStorage.setItem("user_chat", JSON.stringify(user_chat));
+    });
+    socket.on("message-delivered", (data) => {
+        if(document.getElementById(data['msid'])!=null){
+            document.getElementById(data['msid']).classList.remove("fa-check");
+            document.getElementById(data['msid']).classList.add("fa-check-double");
+        };
+        user_chat = JSON.parse(localStorage.getItem("user_chat"));
+        user_chat.forEach(user=>{
+            if(user[5]==data['msid']){
+                user[6] = "delivered";
+            }
+        });
+        localStorage.setItem("user_chat", JSON.stringify(user_chat));
+    });
+    socket.on("message-seen", (data) => {
+        if(document.getElementById(data['msid'])!=null){
+        document.getElementById(data['msid']).classList.remove("fa-check");
+        document.getElementById(data['msid']).classList.add("fa-check-double")
+        document.getElementById(data['msid']).style.color = "#6495ED";
+        };    
+        user_chat = JSON.parse(localStorage.getItem("user_chat"));
+        user_chat.forEach(user=>{
+            if(user[5]==data['msid']){
+                user[6] = "seen";
+            }
+        });
+        localStorage.setItem("user_chat", JSON.stringify(user_chat));
+    });
+
+</script>
+<script>
+    document.getElementById("ready-message").addEventListener("keypress", function (e) {
+        if (e['key'] == 'Enter') {
+            document.getElementById("send-button").click();
+        }
+    });
+    function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    function logout() {
+        fetch(
+            url = '/api/delete-session/',
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "sessionid": getCookie("sessionid") })
+            }
+        );
+        document.cookie = "sessionid=None; max-age=0";
+        window.location.href = "/login/";
+    };
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+            .replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    };
+</script>
+
+</html>
