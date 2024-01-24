@@ -24,6 +24,7 @@ class EntryNameSpace(AsyncNamespace):
                             },
                         to=[sid]
                         )
+                    db.delivered_chat(email=user)
                     await self.emit("connected-user",user)
                     return
         await self.emit("status","unauthorize access.",to=sid)
@@ -34,16 +35,34 @@ class EntryNameSpace(AsyncNamespace):
             await self.emit("disconnected-user",email)
 
     async def on_message(self, sid, data):
+        if data.get("type") == "message-seen":
+            db.update_message_status_seen(data)
+            senders = db.is_user_online(data['sender'])
+            if senders:
+                await self.emit("message-seen",data={"msid":data['msid']},to=senders)
+            return
+        #insert messsage in db
         db.inset_message_users_chat(data)
-        receiver = data['receiver']
+
+        # sending received response to user
         await self.emit(
-            'new-message',
-            data = data,
-            to = db.is_user_online(receiver)
+            'message-received',
+            data = {'msid':data['msid']},
+            to = sid
+        )
+        # if receiver online send it to user
+        users_online_with_receiver_id = db.is_user_online(data['receiver'])
+        if users_online_with_receiver_id:
+            db.update_message_status_delivered(data)
+            await self.emit(
+                'new-message',
+                data = data,
+                to = users_online_with_receiver_id
+                )
+            await self.emit(
+                'message-delivered',
+                data = {"msid":data['msid']},
+                to = sid
             )
-        await self.emit(
-            'message-status',
-            data = {data['msid']:'ok'},
-            to = [sid]
-            )
+
         

@@ -5,9 +5,12 @@ from httpviews import *
 from sockethandler import *
 from api_views import *
 
+# ngrok testing
+# cors_allowed_origins = ['https://b365-112-196-88-154.ngrok-free.app']
+# sio = socketio.AsyncServer(cors_allowed_origins=cors_allowed_origins)
 
-cors_allowed_origins = ['https://b009-112-196-88-154.ngrok-free.app']
-sio = socketio.AsyncServer(cors_allowed_origins=cors_allowed_origins)
+# localhost testing 
+sio = socketio.AsyncServer()
 
 app = web.Application()
 

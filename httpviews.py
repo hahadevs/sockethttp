@@ -75,3 +75,4 @@ async def logout_view(request):
 
 async def redirect_login(request):
     return web.HTTPFound("/login/")
+

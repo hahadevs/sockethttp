@@ -62,12 +62,14 @@ class Database:
             receiver = message_dict['receiver']
             message_datetime = datetime.now()
             message = message_dict['message']
-            command = f"""insert into users_chat(`sender`,`receiver`,`datetime`,`message`) values ('{sender}','{receiver}','{message_datetime}','{message}');"""
+            msid = message_dict['msid']
+            status = "not-delivered"
+            command = f"""insert into users_chat(`sender`,`receiver`,`datetime`,`message`,`msid`,`status`) values ('{sender}','{receiver}','{message_datetime}','{message}','{msid}','{status}');"""
             self.__cursor.execute(command)
             self.__conn.commit()
-            command = f"""select * from users_chat where id = LAST_INSERT_ID();"""
-            self.__cursor.execute(command)
-            return self.__cursor.fetchone()
+            # command = f"""select * from users_chat where id = LAST_INSERT_ID();"""
+            # self.__cursor.execute(command)
+            return True
         except Exception as e:
             print("inset_message_message : ",e)
     @_connector
@@ -78,6 +80,32 @@ class Database:
             self.__conn.commit()
         except Exception as e :
             print("add_socket : ",e)
+    @_connector
+    def update_message_status_delivered(self,data):
+        msid = data['msid']
+        command = f"""update users_chat set status = 'delivered' where msid = '{msid}';"""
+        try:
+            self.__cursor.execute(command)
+            self.__conn.commit()
+        except Exception as e :
+            print("update_message_status_delivered : ",e)
+    @_connector
+    def update_message_status_seen(self,data):
+        msid = data['msid']
+        command = f"""update users_chat set status = 'seen' where msid = '{msid}';"""
+        try:
+            self.__cursor.execute(command)
+            self.__conn.commit()
+        except Exception as e :
+            print("update_message_status_seen : ",e)
+    @_connector
+    def delivered_chat(self,email):
+        command = f"update users_chat set status = 'delivered' where receiver = '{email}' and status = 'not-delivered';"
+        try:
+            self.__cursor.execute(command)
+            self.__conn.commit()
+        except Exception as e:
+            print("delivered_chat : ",e)
     @_connector
     def delete_session(self,sessionid):
         command = f"""delete from session_auth where sessionid = '{sessionid}';"""
